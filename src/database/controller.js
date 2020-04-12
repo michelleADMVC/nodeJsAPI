@@ -52,5 +52,15 @@ module.exports={
                 console.log(err);
             }        
         });
+    },
+    addTool : async (input) => {
+        let newTool = new Tool(input);
+        await newTool.save((err,document)=>{
+            if(err){
+                console.log(err);
+            }else{
+                console.log(document);
+            }
+        });
     }
 }
