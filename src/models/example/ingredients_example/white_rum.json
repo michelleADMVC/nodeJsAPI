@@ -1,0 +1,9 @@
+{"name_es":"Ron blanco",
+    "name_en":"White rum",
+    "model":"liquid_model",
+    "view_model":"bottleRum.svg",
+    "type":"liquid",
+    "color":"#f2f0eb",
+    "description_es": "Se caracteriza por la ausencia de color aunque puede tener un ligero tono amarillo",
+    "description_en":"English description unavailable"
+    }

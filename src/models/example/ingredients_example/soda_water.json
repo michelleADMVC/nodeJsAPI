@@ -1,0 +1,9 @@
+{"name_es":"Agua gasificada",
+    "name_en":"Soda water",
+    "model":"liquid_model",
+    "view_model":"soda_botle.jpg",
+    "type":"liquid",
+    "color":"#f2f2f2",
+    "description_es": "Agua gasificada o carbonatada sin sabor",
+    "description_en":"English description unavailable"
+    }

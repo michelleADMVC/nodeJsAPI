@@ -5,16 +5,27 @@ require('../../database/connection');
 const database = require('../../database/controller');
 
 
-router.get('/resources',(req,res) =>{
+router.get('/resources/coctels',async (req,res) =>{
     console.log("Peticion recibida");
-    data = database.getCoctels();
-    
-    res.send(data);
+    let data = await database.getCoctels();
+    res.json(data);
+})
+router.get('/resources/glass',async (req,res) =>{
+    console.log("Peticion recibida");
+    let data = await database.getGlasses();
+    res.json(data)
+})
+router.get('/resources/ing',async (req,res) =>{
+    console.log("Peticion recibida");
+    let data = await database.getIngredients();
+    res.json(data)
+})
+router.get('/resources/tools',async (req,res) =>{
+    console.log("Peticion recibida");
+    let data = await database.getTools();
+    res.json(data)
 })
 
-router.post('/resources',(req,res) =>{
-    console.log(req.body); 
-    res.send(req.body);  
-})
+
 
 module.exports = router;

@@ -1,0 +1,9 @@
+{"name_es":"Jarabe",
+    "name_en":"Syrup",
+    "model":"liquid_model",
+    "view_model":"botle_syroup.jpg",
+    "type":"liquid",
+    "color":"f2f0eb",
+    "description_es": "Tambien llamado goma,almibar.",
+    "description_en":"English description unavailable"
+    }

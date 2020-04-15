@@ -1,0 +1,52 @@
+{"name_en":"Mojito",
+"name_es":"Mojito",
+"description_en":"Not Available", 
+"description_es":"Mojito de toda la vida" ,
+"ingredients": [{
+    "name_en":"Lemon juice",
+    "_id":"5e966b550b653b0a0f4082b8",
+    "amount":"30",
+    "fill":"false",
+    "dust":"false"
+    },
+    {
+    "name_en":"Soda water",
+    "_id":"5e972a7e1265f40eae15016c",
+    "amount":"0",
+    "fill":"true",
+    "dust":"false"
+    },
+    {
+    "name_en":"Ice",
+    "_id":"5e972a891265f40eae15016d",
+    "amount":"0",
+    "fill":"true",
+    "dust":"false"
+    },
+    {
+    "name_en":"Syrup",
+    "_id":"5e972a921265f40eae15016e",
+    "amount":"30",
+    "fill":"false",
+    "dust":"false"
+    },
+    {
+    "name_en":"White_rum",
+    "_id":"5e972a9b1265f40eae15016f",
+    "amount":"60",
+    "fill":"false",
+    "dust":"false"
+    },
+    {
+    "name_en":"Peppermint",
+    "_id":"5e972c2b8f39f60f837b92e3",
+    "amount":"8",
+    "fill":"false",
+    "dust":"false"
+    }
+
+],
+"tools": [{"_id":"5e93b97c67bebc31815f079c"}],
+"glass":{"_id":"5e966b8b0b653b0a0f4082ba"},
+"premium":"false"
+}
