@@ -5,155 +5,112 @@ const Glass = require('../models/Glass');
 const Step  = require('../models/Step');
 const Tool  = require('../models/Tool');
 
+function selectCollection(collection){
+    let schema;
+    switch (collection) {
+        case "cocktails":
+            schema = Coctel;
+        break;
+        case "ingredients":
+            schema = Ingre;
+        break;
+        case "glasses":
+            schema = Glass;
+        break;
+        case "tools":
+            schema = Tool;
+         break;
+    }
+    return schema;
+}
 module.exports={
     find: async () => {
         let res = await mongoose;
         console.log(res);
         return res;
     },
-    getCoctels: async () => {
-        let res = await Coctel.find();
-        console.log(res);
-        return res;
-    },
-    getTools : async () => {
-        let res = await Tool.find();
-        console.log(res);
-        return res;
-    },
-    getGlasses : async () => {
-        let res = await Glass.find();
-        console.log(res);
-        return res;
-    },
-    getSteps : async () => {
-        let res = await Step.find();
-        console.log(res);
-        return res;
-    },
-    getIngredients : async () => {
-        let res = await Ingre.find();
-        console.log(res);
-        return res;
-    },
-    addCoctel: async (input) => {
+    getCollection: async (collection) => {
         let res;
-        let newCoctel = new Coctel(input);
-        await newCoctel.save((err,document)=>{
-            if(err){
-                console.log(err);
-                res = true;
-            }else{
-                console.log(document);
-                res= false;
+        schema = selectCollection(collection);
+        data = await schema.find();
+        res = [{"error":false, "description" :"all ok","objects finded :":data.length}]
+        res.push(data);
+        return res;
+    },
+    addObject: async (input,collection) => {
+         let res = {"error":false,"description": input.name_en+" added"};
+        try{
+        schema = selectCollection(collection);
+        let newObject = new schema(input);
+            await newObject.save((err,document)=>{
+                if(err){
+                    console.log(err);
+                    res = {"error":true,"description":"not valid data"};
+                }
+            });
+            return res;
+        }catch(e){
+            if (e) {
+               return {"error":true,"description":"fatal error"};
             }
-        });
-        return res;
+        }
     },
-    addIngredient : async (input) => {
-        let res;
-        let newIngre = new Ingre(input);
-        await newIngre.save((err,document)=>{
-            if(err){
-                console.log(err);
-                res = true;
-            }else{
-                console.log(document);
-                res= false;
-            }
-        });
-        return res;
-    },
-    addTool : async (input) => {
-        let res;
-        let newTool = new Tool(input);
-        await newTool.save((err,document)=>{
-            if(err){
-                console.log(err);
-                res = true;
-            }else{
-                console.log(document);
-                res = false;
-            }
-        });
-        return res;
-    },
-    addGlass : async (input) => {
-        let res;
-        let newGlass = new Glass(input);
-        await newGlass.save((err,document)=>{
-            if(err){
-                console.log(err);
-                res = true;
-            }else{
-                console.log(document);
-                res = false;
-            }
-        });
-        return res;
-    },
-    removeTool: async (input) => {
-        let res;
-        await Tool.deleteOne(input,function (err, doc) {
+    removeObject: async (input,collection) => {
+        let res; 
+        try{
+        schema = selectCollection(collection);
+        await schema.deleteOne(input,function (err, doc) {
             if (err) {
                 console.log(err);
-            }
-            if (doc.deletedCount > 0) {
-                console.log("Se eliminado un elemento");
-                res = false;
             }else{
-                console.log("El elemento no se encuentra en la base datos");
-                res= true;
+                if (doc.deletedCount > 0) {
+                    console.log("deleted");
+                    
+                    res = {"error":false, "description" :"object deleted"};
+                }else{
+                    res = {"error":true, "description" :"not finded"};
+                }
             }            
         });
         return res;
+        }catch(e){
+            if(e){
+                return {"error":true, "description" :"invalid ID"};
+            }   
+        }
     },
-    removeIngredient: async (input) => {
+    getObjectByID: async (input,collection) => {
         let res;
-        await Ingre.deleteOne(input,function (err, doc) {
+        try{
+            schema = selectCollection(collection);
+        await schema.findById(input,function (err, doc) {
             if (err) {
                 console.log(err);
-            }
-            if (doc.deletedCount > 0) {
-                console.log("Se eliminado un elemento");
-                res = false;
             }else{
-                console.log("El elemento no se encuentra en la base datos");
-                res= true;
-            }            
+                console.log(doc);
+                if (doc) {
+                    res = [{"error":false, "description" :"all ok"}]
+                res.push(doc);          
+                }else{
+                    res = [{"error":true, "description" :"not finded"}]
+                }
+            }
         });
         return res;
+        }catch(e){
+            if(e){
+                return [{"error":true, "description" :"Invalid ID"}];
+            }       
+        }   
     },
-    removeGlass : async (input) => {
-        let res;
-        await Glass.deleteOne(input,function (err, doc) {
-            if (err) {
-                console.log(err);
+    collectionValidator: async (params) => {
+        let collections =["cocktails","ingredients","tools","glasses"]
+        let exists = false;
+        for (let i = 0; i < collections.length; i++) {
+            if(params == collections[i]){
+                exists = true;
             }
-            if (doc.deletedCount > 0) {
-                console.log("Se eliminado un elemento");
-                res = false;
-            }else{
-                console.log("El elemento no se encuentra en la base datos");
-                res= true;
-            }            
-        });
-        return res;
-    },
-    removeCoctel: async (input) => {
-        let res;
-        await Coctel.deleteOne(input,function (err, doc) {
-            if (err) {
-                console.log(err);
-            }
-            if (doc.deletedCount > 0) {
-                console.log("Se eliminado un elemento");
-                res = false;
-            }else{
-                console.log("El elemento no se encuentra en la base datos");
-                res= true;
-            }            
-        });
-        return res;
-    }
+        };
+        return exists;
+     }
 }
