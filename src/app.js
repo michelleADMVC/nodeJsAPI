@@ -14,6 +14,7 @@ app.use(bodyParser.raw());
 app.use(require('./routes/resources/get'));
 app.use(require('./routes/resources/post'));
 app.use(require('./routes/resources/delete'));
+app.use(require('./routes/users/controller'));
 app.use(require('./routes/index'));
 
 

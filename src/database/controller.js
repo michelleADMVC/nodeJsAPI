@@ -4,6 +4,7 @@ const Ingre = require ('../models/Ingredient');
 const Glass = require('../models/Glass');
 const Step  = require('../models/Step');
 const Tool  = require('../models/Tool');
+const User = require('../models/User');
 
 function selectCollection(collection){
     let schema;
@@ -22,6 +23,17 @@ function selectCollection(collection){
          break;
     }
     return schema;
+};
+async function emailExists(email){
+    let res;
+    user = await User.findOne({email:email});  
+
+    if (user) {
+        res = true;
+    }else{
+        res = false;
+    }
+    return res;
 }
 module.exports={
     find: async () => {
@@ -112,5 +124,40 @@ module.exports={
             }
         };
         return exists;
-     }
+    },
+    findUser : async (email) =>{
+        return user = await User.findOne({email: email});  
+    },
+    validatePassword : async (user,password)=>{
+        const isValid = await user.validatePassword(password);
+        if (isValid) {
+            return true;
+        }else{
+            return false;
+        }
+    },
+    newUser:async(data) =>{
+        var res = [];
+        const {username,email,password} = data;
+        console.log(await emailExists(email));
+        
+        if(username && email && password){
+            if(!await emailExists(email)){
+            const user = new User(data);
+            res.push({"error":false, "description" :"register success"});
+                user.password = await user.encryptPassword(user.password);
+                await user.save((err,document)=>{
+                    if(err){
+                        console.log(err);
+                    }
+                });
+                res.push(user);
+            }else{
+            res.push({"error":true, "description" :"this email already exists"});
+            }
+        }else{
+            res.push({"error":true, "description" :"not valid data"});
+        }
+         return res;
+    }
 }
