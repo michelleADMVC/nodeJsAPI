@@ -95,16 +95,16 @@ module.exports={
         let res;
         try{
             schema = selectCollection(collection);
-        await schema.findById(input,function (err, doc) {
+            await schema.findById(input,function (err, doc) {
             if (err) {
                 console.log(err);
             }else{
                 console.log(doc);
                 if (doc) {
-                    res = [{"error":false, "description" :"all ok"}]
+                res = [{"error":false, "description" :"all ok"}]
                 res.push(doc);          
                 }else{
-                    res = [{"error":true, "description" :"not finded"}]
+                res = [{"error":true, "description" :"not finded"}]
                 }
             }
         });
@@ -159,5 +159,33 @@ module.exports={
             res.push({"error":true, "description" :"not valid data"});
         }
          return res;
+    },
+    getObjectByName: async (name,collection) =>{
+        let res;
+        try{
+            schema = selectCollection(collection);
+        await schema.find({"name_en":name},function (err, doc) {
+            if (err) {
+                console.log(err);
+            }else{
+                console.log(doc);
+                if (doc) {
+                    if(doc.length <1){
+                        res = [{"error":true, "description" :"not finded"}];
+                    }else{
+                        res = [{"error":false, "description" :"all ok","objects finded :":doc.length}]
+                        res.push(doc);  
+                    }        
+                }else{
+                    res = [{"error":true, "description" :"not finded"}]
+                }
+            }
+        });
+        return res;
+        }catch(e){
+            if(e){
+                return [{"error":true, "description" :"Invalid Name"}];
+            }       
+        }   
     }
 }

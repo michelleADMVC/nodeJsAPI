@@ -27,7 +27,7 @@ router.get('/me',verifyToken, async (req,res) =>{
     }else{
         res.status(200).json(user);
     }
-    res.status(404)   console.log(req.decoded);
+    res.status(404).json(req.decoded);
   
 } )
 router.post('/signin',async (req,res) =>{

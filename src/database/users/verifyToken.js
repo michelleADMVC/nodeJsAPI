@@ -1,5 +1,5 @@
 const jwt = require ('jsonwebtoken');
-const config = require('../../database/users/config');
+const config = require('../config');
 
 function verifyToken (req, res, next){
     const token = req.headers["access-token"];

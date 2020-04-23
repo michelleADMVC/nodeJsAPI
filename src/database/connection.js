@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const uri = 'mongodb://localhost/coctelapp';
+const config = require('./config')
+const uri = config.dbURI;
 mongoose.connect(uri,{
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -7,4 +8,3 @@ mongoose.connect(uri,{
     useFindAndModify : false
 })
 .then(db => console.log('DB is conected to',uri))
-.catch(err=> console.error(err));

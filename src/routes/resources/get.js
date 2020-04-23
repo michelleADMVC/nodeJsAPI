@@ -1,7 +1,6 @@
 const express= require('express');
 const router = express.Router();
 
-require('../../database/connection');
 const database = require('../../database/controller');
 
 
@@ -32,6 +31,21 @@ router.get('/resources/:collection/:_id',async (req,res) =>{
         res.status(400).json({"error":true,"description":"not valid collection"});
     }
     
+})
+router.get('/resources/:collection/name/:name',async (req,res) =>{
+    if (await database.collectionValidator(req.params.collection)) {
+        let dbResponse = await database.getObjectByName(req.params.name,req.params.collection);
+        console.log(dbResponse);
+        let statusResponse = dbResponse[0];
+        if (!statusResponse.error) {
+            res.status(200).json(dbResponse);
+        }else{
+            res.status(404).json(dbResponse);
+        }
+    }else{
+        res.status(400).json({"error":true,"description":"not valid collection"});
+    }
+   
 })
 router.get('/resources',(req,res) =>{
     res.status(400).json({"error":true,"description":"try to find /resources/collections"});
