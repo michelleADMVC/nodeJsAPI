@@ -7,10 +7,11 @@ const session = require('express-session');
 const config = require ('./database/config');
 const dbConnection = require('./database/connection');
 const mongoStore = require('connect-mongo')(session);
-
+const cors = require('cors'); 
 //Settings
 app.set('port', process.env.PORT || 3000);
 //Middlewares
+app.use(cors);
 app.use(morgan('short'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
