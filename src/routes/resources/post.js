@@ -6,7 +6,7 @@ const database = require('../../database/controller');
 router.post('/resources/:collection',async (req,res) =>{
     if (await database.collectionValidator(req.params.collection)) {
         let dbResponse = await database.addObject(req.body,req.params.collection);
-        if (!dbResponse) {
+        if (!dbResponse.error) {
             res.status(201).json(dbResponse);
         }else{
             res.status(401).json(dbResponse);
